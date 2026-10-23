@@ -1,0 +1,61 @@
+# ==============================================================================
+# AI Config Kit — Server-Side Pre-configured Providers (Copy to server-providers.yml)
+# ==============================================================================
+# Keys defined here stay strictly on the server. The frontend receives only
+# `isServerConfigured: true` badges and optional allowed model lists.
+
+providers:
+  openai:
+    apiKey: ""
+    baseUrl: "https://api.openai.com/v1"
+    # models:
+    #   - gpt-4o
+    #   - gpt-4o-mini
+  deepseek:
+    apiKey: ""
+    baseUrl: "https://api.deepseek.com/v1"
+  qwen:
+    apiKey: ""
+    baseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+
+image:
+  seedream:
+    apiKey: ""
+  qwen-image:
+    apiKey: ""
+  nano-banana:
+    apiKey: ""
+
+video:
+  seedance:
+    apiKey: ""
+  kling:
+    apiKey: ""
+  veo:
+    apiKey: ""
+
+tts:
+  openai-tts:
+    apiKey: ""
+  qwen-tts:
+    apiKey: ""
+  volcengine-tts:
+    apiKey: ""
+    appId: ""
+  elevenlabs-tts:
+    apiKey: ""
+
+asr:
+  openai-whisper:
+    apiKey: ""
+  qwen-asr:
+    apiKey: ""
+
+pdf:
+  mineru:
+    apiKey: ""
+    baseUrl: "https://mineru.net"
+
+web-search:
+  tavily:
+    apiKey: ""
