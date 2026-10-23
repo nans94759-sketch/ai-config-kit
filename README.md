@@ -1,90 +1,135 @@
-# AI Config Kit (`ai-config-kit`)
+<div align="center">
 
-> **开箱即用的全模态 AI 接口配置中心模块** —— Extracted & decoupled from OpenMAIC, designed as both a **standalone runnable Next.js Showcase App** and a **drop-in modular kit** for any React / Next.js AI product.
+# 🧩 AI Config Kit (`ai-config-kit`)
 
----
+**Stop rebuilding the AI Provider Settings screen in every AI app.**  
+**别再为每个 AI 产品重复手搓一遍「模型与多模态接口设置页」了。**
 
-## ✨ 核心特性 (Features)
+A production-ready, **shadcn-style copy-and-paste** Multi-Modal AI Provider Configuration Center & **BYOK (Bring Your Own Key)** UI module for **Next.js & React**.  
+Extracted from [OpenMAIC](https://github.com/THU-MAIC/OpenMAIC) · Supports **LLM, Image, Video, TTS, ASR, PDF & Web Search** out of the box.
 
-1. **全模态 7 大 AI 能力域一站式管理**：
-   - 🤖 **LLM 大语言模型 (`providers`)**：内置 OpenAI、Claude (Anthropic)、Gemini (Google)、DeepSeek、Kimi、通义千问 (Qwen)、智谱 (GLM)、MiniMax、硅基流动 (SiliconFlow)、豆包 (Doubao)、Grok (xAI) 11 大主流厂商，并支持**新增任意自定义 OpenAI / Anthropic / Google 兼容中转站**与自定义模型能力标签（Vision 视觉 / Thinking 深度思考 / Tools 工具调用 / 上下文窗口）。
-   - 🎨 **Image 图像生成 (`image`)**：内置豆包 Seedream、千问百炼 (Qwen-Image)、Nano Banana (Gemini Image)、Grok Image，支持模型开关管理、自定义模型追加及宽高比探测。
-   - 🎬 **Video 视频生成 (`video`)**：内置豆包 Seedance、可灵 (Kling)、Google Veo、OpenAI Sora、Grok Video，支持文生视频/图生视频能力管理与自定义模型追加。
-   - 🔊 **TTS 语音合成 (`tts`)**：内置浏览器原生 Web Speech、OpenAI TTS、Azure TTS、智谱 GLM-TTS、千问 Qwen-TTS、火山引擎豆包语音 (Volcengine)、ElevenLabs，支持音色切换、语速调节与**实时试听预览**。
-   - 🎙️ **ASR 语音识别 (`asr`)**：内置浏览器原生语音识别、OpenAI Whisper、千问 Qwen-ASR，支持多语种切换与**实时麦克风录音转写测试**。
-   - 📄 **PDF 文档解析 (`pdf`)**：内置本地解析 UNPDF 与高精度 MinerU API 配置。
-   - 🌐 **Web Search 联网搜索 (`webSearch`)**：内置 Tavily 搜索 API 配置与连通性检测。
+[![License: MIT](https://img.shields.io/badge/License-MIT-violet.svg)](https://opensource.org/licenses/MIT)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16+-black?logo=next.js)](https://nextjs.org/)
+[![React 19](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
+[![Vercel AI SDK](https://img.shields.io/badge/Vercel_AI_SDK-v6-black?logo=vercel)](https://sdk.vercel.ai/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178c6?logo=typescript)](https://www.typescriptlang.org/)
+[![LLMs.txt](https://img.shields.io/badge/GEO-llms.txt_Ready-10b981)](./llms.txt)
 
-2. **两种 UI 形态 + 两大快捷切换器**：
-   - `<SettingsDialog />`：毛玻璃弹窗模式（Modal Dialog），随时从导航栏或设置按钮唤起。
-   - `<SettingsPanel />`：三栏嵌入式面板（Embedded 3-Column Panel），可直接嵌入独立设置页。
-   - `<ModelSelector />`：顶部/输入框旁的大语言模型下拉快切胶囊（带服务商分组、能力 Badge、未配置呼吸灯提醒）。
-   - `<MediaPopover />`：多模态能力（Image / Video / TTS / ASR）聚合快捷开关与音色试听浮层。
+[Why AI Config Kit?](#-why-ai-config-kit-为什么你需要它) · [7 Modalities & 28+ Providers](#-supported-modalities--providers-支持的全模态厂商矩阵) · [Quick Start](#-quick-start-快速开始) · [3-Step Copy & Paste](#-3-step-drop-in-integration-3-步复制到你的项目) · [AI Agent Auto-Install](#-one-prompt-install-with-cursor--claude-code) · [FAQ](#-faq--comparison-常见问题与方案对比)
 
-3. **真实后端连通性检测与双层配置体系**：
-   - **一键「测试连通性」**：每个能力面板均配备真实后端探测路由（`/api/verify-*`、`/api/generate/tts`、`/api/transcription`），内置生产环境 SSRF 防护。
-   - **客户端 + 服务端双层存储**：
-     - 客户端配置自动持久化至浏览器 `localStorage`（`ai-config-kit-storage`），并支持**一键导入/导出 JSON 配置文件（可选脱敏 API Key）**。
-     - 服务端支持通过 `.env` 或 `server-providers.yml` 预置企业/团队公共 Key（密钥永不下发前端，前端自动渲染「服务端已配置」徽章）。
+</div>
 
 ---
 
-## 🚀 方式一：作为独立项目直接运行 (Standalone Usage)
+## 📸 Preview (界面预览)
+
+![AI Config Kit - 3-Column Multi-Modal AI Provider Configuration Center](./public/screenshots/hero-llm-settings.png)
+
+> **What you see above is a single drop-in component (`<SettingsPanel />` / `<SettingsDialog />`)** paired with top-bar quick switchers (`<ModelSelector />` + `<MediaPopover />`).
+
+---
+
+## 💡 Why AI Config Kit? (为什么你需要它？)
+
+Every time you build an AI application (Agent workspace, AI SaaS, Chat client, AI courseware, or internal AI tool), you inevitably need a **"Settings -> Model & API Configuration"** module.
+
+Building a production-grade AI configuration UI from scratch takes **3–5 days** of repetitive engineering. **AI Config Kit** turns that into a **3-minute copy-paste**:
+
+| Engineering Requirement (开发痛点) | Building From Scratch (自己手搓) | With `ai-config-kit` (直接拿走) |
+| :--- | :--- | :--- |
+| **Multi-Vendor LLM Registry** | Manually maintain model IDs, context windows & icons | **11 built-in LLM providers** + 60+ latest models pre-configured with SVG logos |
+| **Custom Relay / Proxy (`baseUrl`)** | Custom form logic for OpenAI / Anthropic / Gemini protocols | **Built-in Custom Provider Builder** (`+ Add`) with live `/chat/completions` URL preview |
+| **Multimodal Config (Image/Video/Audio)** | Separate settings pages for TTS, Whisper, Seedream, Kling, Veo | **Unified 7-Modality 3-Column Panel** (`LLM`, `Image`, `Video`, `TTS`, `ASR`, `PDF`, `Search`) |
+| **Live Connectivity Verification** | Users save broken keys and fail during generation | **One-click `⚡ Test Connectivity`** for every modality + live TTS voice preview & ASR mic test |
+| **Hybrid Key Resolution (BYOK + Server)** | Complex logic mixing `.env` keys and user `localStorage` keys | **Dual-Layer Config**: Server `server-providers.yml` / `.env` fallback + Client BYOK override |
+| **Security & SSRF Protection** | Vulnerable to internal network probing via custom `baseUrl` | **Built-in SSRF Guard** (`ssrf-guard.ts`) blocking private IP ranges on custom base URLs |
+| **Config Backup & Migration** | Users lose all keys when switching browsers | **1-Click JSON Import / Export** (with optional API key masking for safe sharing) |
+
+---
+
+## 🌐 Supported Modalities & Providers (支持的全模态厂商矩阵)
+
+Unlike single-purpose LLM model pickers, `ai-config-kit` manages **all 7 core AI capability layers** required by modern agentic applications:
+
+| Modality (能力域) | Built-in Providers (预置服务商) | Key Features (核心特性) | Verification Route (测试路由) |
+| :--- | :--- | :--- | :--- |
+| **1. LLM (大语言模型)** | **OpenAI**, **Anthropic (Claude)**, **Google (Gemini)**, **DeepSeek**, **Kimi (Moonshot)**, **Qwen (通义千问)**, **GLM (智谱)**, **MiniMax**, **SiliconFlow (硅基流动)**, **Doubao (豆包)**, **Grok (xAI)** + **Custom Providers** | Custom models, capability badges (`Vision`, `Thinking`, `Tools`), context window config, Vercel AI SDK adapter | `POST /api/verify-model` |
+| **2. Image (图像生成)** | **Seedream (豆包即梦)**, **Qwen-Image (千问百炼)**, **Nano Banana (Gemini Image)**, **Grok Image** | Enable/disable models, add custom model IDs, aspect ratio metadata | `POST /api/verify-image-provider` |
+| **3. Video (视频生成)** | **Seedance (豆包视频)**, **Kling (可灵)**, **Google Veo**, **OpenAI Sora**, **Grok Video** | Text-to-video & Image-to-video model registry, custom model IDs | `POST /api/verify-video-provider` |
+| **4. TTS (语音合成)** | **Browser Native Web Speech**, **OpenAI TTS**, **Azure TTS**, **GLM-TTS**, **Qwen-TTS**, **Volcengine (火山豆包语音)**, **ElevenLabs** | Voice list per provider, speed slider (`0.5x–2.0x`), **live audio preview** | `POST /api/generate/tts` |
+| **5. ASR (语音识别)** | **Browser Native SpeechRecognition**, **OpenAI Whisper**, **Qwen-ASR** | Language selection, **live microphone recording & transcription test** | `POST /api/transcription` |
+| **6. PDF (文档解析)** | **UNPDF (Local/Zero-Key)**, **MinerU (高精度学术/公式解析)** | Zero-config local fallback + MinerU API key & base URL test | `POST /api/verify-pdf-provider` |
+| **7. Web Search (联网搜索)** | **Tavily AI Search** | API key & custom endpoint configuration + live search probe | `POST /api/verify-web-search` |
+
+---
+
+## 🤖 One-Prompt Install with Cursor / Claude Code
+
+Using an AI coding agent (**Cursor**, **Claude Code**, **Antigravity**, **Windsurf**, **Cline**)?  
+Copy and paste this single prompt into your agent to automatically integrate `ai-config-kit` into your existing Next.js project:
+
+```text
+Please integrate https://github.com/nans94759-sketch/ai-config-kit into my Next.js project.
+Read the repository's AGENTS.md and llms.txt first, then copy `components/settings/`, `lib/`, `app/api/`, and `public/logos/` into my project and wire up `<SettingsDialog />` and `<ModelSelector />`.
+```
+
+---
+
+## 🚀 Quick Start (快速开始)
+
+### Option A: Run as a Standalone Playground (独立克隆运行)
 
 ```bash
+git clone https://github.com/nans94759-sketch/ai-config-kit.git
 cd ai-config-kit
 npm install
 npm run dev
 ```
 
-浏览器打开 `http://localhost:3000` 即可体验包含完整三栏配置面板、弹窗模式、快捷模型选择器与接入代码预览的交互式 Playground。
-
-如需配置服务端预设 Key（可选）：
-```bash
-cp .env.example .env.local
-# 或使用 YAML 配置：
-cp server-providers.example.yml server-providers.yml
-```
+Open `http://localhost:3000` to explore:
+- **Top Navbar**: `<ModelSelector />` popover + `<MediaPopover />` quick toggles + Modal trigger + `zh-CN / en-US` switch + Dark/Light mode.
+- **Live Status Bar**: Real-time status across all 7 AI capability categories.
+- **3-Column `<SettingsPanel />`**: Embedded directly on the page for instant testing.
 
 ---
 
-## 🧩 方式二：3 步复制到你自己的 Next.js 项目 (Drop-in Integration)
+## 🧩 3-Step Drop-in Integration (3 步复制到你的项目)
 
-如果你已经有自己的 Next.js (App Router + Tailwind CSS v4) 项目，只需直接复制以下目录即可完整移植：
+Designed with the **shadcn/ui philosophy**: you own the code. Copy the modular directories directly into any Next.js (App Router + Tailwind CSS v4) project:
 
-### 第 1 步：复制核心模块目录
-
-将本仓库中的以下文件夹复制到你的项目根目录：
+### Step 1: Copy the Modular Directories
 
 ```text
-├── public/logos/                # 各大 AI 厂商高清 SVG/PNG 图标
-├── components/settings/         # 全套配置中心 UI 组件 + ModelSelector + MediaPopover
-├── components/ui/               # 基础 shadcn/ui 原语组件（如已有可按需合并）
+your-nextjs-app/
+├── public/logos/                # 21 SVG/PNG provider icons (OpenAI, Claude, DeepSeek, Kimi, Qwen, etc.)
+├── components/settings/         # Complete Settings UI (<SettingsDialog />, <SettingsPanel />, <ModelSelector />, <MediaPopover />)
+├── components/ui/               # 19 shadcn/Radix UI primitives (merge with your existing components/ui)
 ├── lib/
-│   ├── ai/                      # LLM 厂商注册表、Vercel AI SDK 适配器与默认参数
-│   ├── media/                   # Image & Video 厂商注册表与连通性适配器
-│   ├── audio/                   # TTS & ASR 厂商注册表、WebSocket/REST 合成与试听 Hook
-│   ├── pdf/                     # PDF 解析服务定义
-│   ├── web-search/              # Tavily 联网搜索客户端
-│   ├── server/                  # 服务端 Key 解析 (provider-config)、resolveModel 与 SSRF 防护
-│   ├── store/settings.ts        # Zustand 全模态配置状态管理（含 JSON 导入导出）
-│   ├── hooks/{use-i18n,use-theme}.tsx # 内置零配置 Fallback 的中英双语与主题 Hook
-│   ├── i18n/                    # 中英双语词典
-│   └── types/                   # TypeScript 类型定义
-└── app/api/
-    ├── server-providers/        # 下发服务端已配置厂商状态（不含密钥明文）
-    ├── verify-model/            # LLM 模型连通性测试接口
-    ├── verify-image-provider/   # 图像生成连通性测试接口
-    ├── verify-video-provider/   # 视频生成连通性测试接口
-    ├── verify-pdf-provider/     # MinerU PDF 连通性测试接口
-    ├── verify-web-search/       # Tavily 联网搜索连通性测试接口
-    ├── generate/tts/            # TTS 在线试听与语音合成接口
-    └── transcription/           # ASR 录音转写测试接口
+│   ├── store/settings.ts        # Zustand persisted store ('ai-config-kit-storage') + JSON import/export
+│   ├── ai/                      # LLM provider registry + Vercel AI SDK getModel() factory
+│   ├── media/                   # Image & Video provider registries + connectivity adapters
+│   ├── audio/                   # TTS & ASR provider registries + live preview hooks
+│   ├── pdf/                     # PDF parser definitions (UNPDF & MinerU)
+│   ├── web-search/              # Tavily search client
+│   ├── server/                  # Dual-layer key resolver (provider-config.ts), resolveModel() & SSRF guard
+│   ├── hooks/                   # Zero-config safe useI18n() & useTheme() hooks (work even without Providers!)
+│   ├── i18n/                    # Built-in zh-CN & en-US translations
+│   └── types/                   # TypeScript interfaces
+└── app/api/                     # 8 backend verification & server-provider sync routes
+    ├── server-providers/route.ts
+    ├── verify-model/route.ts
+    ├── verify-image-provider/route.ts
+    ├── verify-video-provider/route.ts
+    ├── verify-pdf-provider/route.ts
+    ├── verify-web-search/route.ts
+    ├── generate/tts/route.ts
+    └── transcription/route.ts
 ```
 
-### 第 2 步：在页面中挂载组件
+### Step 2: Mount the UI Components Anywhere
 
-> 💡 `useI18n` 与 `useTheme` 内置了安全默认值（Fallback），即使不包裹 `<I18nProvider>` 也能直接渲染，不会报错。
+> 💡 **Zero-Provider Safe**: `useI18n()` and `useTheme()` include built-in default fallbacks, so `<SettingsDialog />`, `<SettingsPanel />`, `<ModelSelector />`, and `<MediaPopover />` work immediately even if you don't wrap your root `layout.tsx`!
 
 ```tsx
 'use client';
@@ -97,70 +142,97 @@ import {
   MediaPopover,
 } from '@/components/settings';
 
-export default function MyAIWorkspace() {
-  const [settingsOpen, setSettingsOpen] = useState(false);
+export default function ChatHeader() {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="p-4 flex items-center gap-3">
-      {/* 1. 顶部/对话栏模型快切器 */}
-      <ModelSelector />
+    <header className="flex items-center gap-3 p-4 border-b">
+      {/* 1. Multimodal capability quick-switcher (Image / Video / TTS / ASR) */}
+      <MediaPopover onSettingsOpen={() => setOpen(true)} />
 
-      {/* 2. 多模态能力（生图/视频/TTS/ASR）快捷开关浮层 */}
-      <MediaPopover onSettingsOpen={() => setSettingsOpen(true)} />
-
-      {/* 3. 唤起配置中心弹窗 */}
-      <button onClick={() => setSettingsOpen(true)}>打开 AI 接口设置</button>
-      <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
-    </div>
+      {/* 2. Open full 3-column configuration modal */}
+      <button onClick={() => setOpen(true)}>⚙️ AI Provider Settings</button>
+      <SettingsDialog open={open} onOpenChange={setOpen} />
+    </header>
   );
 }
 ```
 
-### 第 3 步：在你的业务代码中读取配置与调用模型
+### Step 3: Resolve the Active Model in Your Backend API
 
-#### 前端读取当前激活配置：
+#### On the Client (Frontend):
 ```ts
 import { useSettingsStore } from '@/lib/store/settings';
 
-// 在 React 组件外或请求拦截器中直接读取：
 const { providerId, modelId, providersConfig } = useSettingsStore.getState();
-const currentProvider = providersConfig[providerId];
+const activeProvider = providersConfig[providerId];
 
-const response = await fetch('/api/my-chat', {
+await fetch('/api/chat', {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json',
     'x-model': `${providerId}:${modelId}`,
-    'x-api-key': currentProvider?.apiKey || '',
-    'x-base-url': currentProvider?.baseUrl || '',
-    'x-provider-type': currentProvider?.type || 'openai',
+    'x-api-key': activeProvider?.apiKey || '',
+    'x-base-url': activeProvider?.baseUrl || '',
+    'x-provider-type': activeProvider?.type || 'openai',
   },
-  body: JSON.stringify({ prompt: 'Hello!' }),
+  body: JSON.stringify({ messages }),
 });
 ```
 
-#### 后端路由一键解析为 Vercel AI SDK `LanguageModel` 实例：
+#### On the Server (Next.js Route Handler):
 ```ts
 import { NextRequest } from 'next/server';
 import { streamText } from 'ai';
 import { resolveModelFromHeaders } from '@/lib/server/resolve-model';
 
 export async function POST(req: NextRequest) {
-  const { prompt } = await req.json();
-  // 自动合并前端传入 Key 与服务端 server-providers.yml / .env Key
+  const { messages } = await req.json();
+
+  // Automatically resolves: Client BYOK Key > server-providers.yml > .env
   const { model } = await resolveModelFromHeaders(req);
 
-  const result = streamText({
-    model,
-    prompt,
-  });
-
+  const result = streamText({ model, messages });
   return result.toTextStreamResponse();
 }
 ```
 
 ---
 
-## 📄 License
+## 🔒 Dual-Layer Configuration Architecture (客户端 BYOK + 服务端预置双层架构)
 
-MIT
+`ai-config-kit` supports two complementary configuration layers out of the box:
+
+1. **Client-Side BYOK (`localStorage`)**:
+   - Users enter their own API keys and custom relay `baseUrl` in the browser.
+   - Keys are stored locally in `localStorage` (`ai-config-kit-storage`) and can be exported/imported as JSON.
+2. **Server-Side Pre-configured Keys (`server-providers.yml` or `.env`)**:
+   - Team admins or SaaS hosts can configure shared API keys in `server-providers.yml` or `.env.local`.
+   - **`GET /api/server-providers` never exposes raw API keys to the browser**—it only sends `isServerConfigured: true` metadata so the UI automatically displays a `"Server Configured / 服务端已配置"` badge.
+   - When a request hits the backend, `resolveModel()` prioritizes the user's custom key/baseUrl if provided, and seamlessly falls back to the server key.
+
+---
+
+## ❓ FAQ & Comparison (常见问题与方案对比)
+
+### 1. When should I use `ai-config-kit`? (适用场景)
+Use `ai-config-kit` whenever you are building a **Next.js / React AI application** that needs:
+- A **Cherry Studio / LobeChat / OpenMAIC style** multi-provider settings dialog.
+- **BYOK (Bring Your Own Key)** support where users can plug in their own OpenAI, Claude, Gemini, DeepSeek, Qwen, Kimi, or custom OpenAI-compatible proxy keys.
+- Unified configuration for **multi-modal AI pipelines** (combining LLM + Image Generation + Video Generation + TTS + ASR + PDF Parsing + Web Search in one store).
+
+### 2. How does `ai-config-kit` compare to other projects?
+| Project | Positioning | Can I copy-paste just the Settings UI into my Next.js app? |
+| :--- | :--- | :--- |
+| **Cherry Studio / LobeChat** | Full monolithic desktop/web chat applications (100k+ LOC) | ❌ Tightly coupled to their internal database, auth, and chat state |
+| **Vercel AI SDK (`ai`)** | Backend/frontend SDK for calling models | ❌ Headless SDK only; does not provide a provider management UI or BYOK store |
+| **AI Config Kit (`ai-config-kit`)** | **Standalone, decoupled AI Provider Configuration UI + Store + Verification APIs** | ✅ **Yes — 100% self-contained module designed specifically to be copied into any app** |
+
+### 3. Can I use only the LLM settings without Image/Video/TTS?
+Yes. In `components/settings/index.tsx`, the left navigation sidebar items correspond to each capability section (`providers`, `image`, `video`, `tts`, `asr`, `pdf`, `web-search`, `general`). You can comment out any section you don't need in 5 seconds.
+
+---
+
+## 🤝 Contributing & License
+
+Contributions, issues, and PRs for new AI providers are welcome!  
+Licensed under the **MIT License**. Attribution appreciated when used in open-source or commercial products.
